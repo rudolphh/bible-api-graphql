@@ -10,17 +10,18 @@ class BibleAPIRepository {
   }
 
   async getAllBibles(graphqlInput) {
+    let url = `${this.baseURL}bibles`;
     if(!_.isEmpty(graphqlInput)){
-        console.log(graphqlInput);
-        
+        url += `?${serialize(graphqlInput)}`;
     }
 
-    const result = await fetch(this.baseURL + 'bibles', { headers: this.apiKey })
+    const result = await fetch(url, { headers: this.apiKey })
     .then(res => res.json())
     .then(json => json.data);
 
     return result;
   }
+
 
   async getABible(id) {
     const result = await fetch(`${this.baseURL}bibles/${id}`, { headers: this.apiKey })
@@ -30,17 +31,26 @@ class BibleAPIRepository {
     return result; 
   }
 
-  async getAllBooks(bibleId) {
-    const result = await fetch(`${this.baseURL}bibles/${bibleId}/books`, {headers: this.apiKey})
+
+  async getAllBooks(graphqlInput) {
+    let url = `${this.baseURL}bibles/${graphqlInput.bibleId}/books`;
+    delete graphqlInput.bibleId;
+
+    if(!_.isEmpty(graphqlInput)){
+        url += `?${serialize(graphqlInput)}`;
+    }
+
+    const result = await fetch(url, {headers: this.apiKey})
     .then(res => res.json())
     .then(json => json.data);
 
     return result;
   }
 
+
   async getABook(bibleId, bookId, includeChapters = false) {
     const optionalQuery = includeChapters ? '?include-chapters=true' : '';
-    const url = `${this.baseURL}bibles/${bibleId}/books/${bookId}${optionalQuery}`;
+    let url = `${this.baseURL}bibles/${bibleId}/books/${bookId}${optionalQuery}`;
 
     const result = await fetch(url , {headers: this.apiKey})
     .then(res => res.json())
@@ -48,6 +58,28 @@ class BibleAPIRepository {
 
     return result;    
   }
+
+
+  async getAllChapters(bibleId, bookId) {
+    let url = `${this.baseURL}bibles/${bibleId}/books/${bookId}/chapters`;
+
+    const result = await fetch(url , {headers: this.apiKey})
+    .then(res => res.json())
+    .then(json => json.data);
+
+    return result;  
+  }
+
 };
+
+
+serialize = function(obj) {
+    var str = [];
+    for (var p in obj)
+      if (obj.hasOwnProperty(p) && obj[p]) {
+        str.push(encodeURIComponent(_.kebabCase(p)) + "=" + encodeURIComponent(obj[p]));
+      }
+    return str.join("&");
+}
 
 module.exports = BibleAPIRepository;

@@ -7,8 +7,11 @@ const rootResolver = {
     bible: graphqlInput => bibleApiService.getABible(graphqlInput.id),
     bibles: graphqlInput => bibleApiService.getAllBibles(graphqlInput),
 
-    books: graphqlInput => bibleApiService.getAllBooks(graphqlInput.bibleId),
-    book: ({ bibleId, bookId, includeChapters }) => bibleApiService.getABook(bibleId, bookId, includeChapters)
+    books: graphqlInput => bibleApiService.getAllBooks(graphqlInput),
+    book: ({ bibleId, bookId, includeChapters }) => bibleApiService.getABook(bibleId, bookId, includeChapters),
+
+    chapters: ({ bibleId, bookId }) => bibleApiService.getAllChapters(bibleId, bookId)
+
 };
   
 const graphql = graphqlHTTP({

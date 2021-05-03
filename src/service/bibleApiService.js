@@ -21,6 +21,10 @@ class BibleAPIService {
         return this.bibleApiRepository.getABook(bibleId, bookId, includeChapters);
     }
 
+    getAllChapters(bibleId, bookId) {
+        return this.bibleApiRepository.getAllChapters(bibleId, bookId);
+    }
+
 }
 
 module.exports = new BibleAPIService();

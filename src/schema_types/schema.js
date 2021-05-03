@@ -60,8 +60,10 @@ exports.schema = buildSchema(`
     bibles(language: String, abbreviation: String, name: String, ids: String, 
         includeFullDetails: String): [Bible]
     bible(id: String!): Bible
-    books(bibleId: String!): [Book]
+    books(bibleId: String!, includeChapters: Boolean, includeChaptersAndSections: Boolean): [Book]
     book(bibleId: String!, bookId: String!, includeChapters: Boolean): Book
+    chapters(bibleId: String!, bookId: String!): [Chapter]
+    
   }
 
 `);
