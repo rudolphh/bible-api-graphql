@@ -1,4 +1,5 @@
 const fetch = require('node-fetch');
+const _ = require('lodash');
 
 class BibleAPIRepository {
   constructor() {
@@ -8,7 +9,12 @@ class BibleAPIRepository {
     this.apiKey = { 'api-key' : '9bea9ab8db7fd98f1f0ebb9cd98b8001' };
   }
 
-  async getAllBibles() {
+  async getAllBibles(graphqlInput) {
+    if(!_.isEmpty(graphqlInput)){
+        console.log(graphqlInput);
+        
+    }
+
     const result = await fetch(this.baseURL + 'bibles', { headers: this.apiKey })
     .then(res => res.json())
     .then(json => json.data);

@@ -5,7 +5,7 @@ const bibleApiService = require('../service/bibleApiService');
 const rootResolver = {
 
     bible: graphqlInput => bibleApiService.getABible(graphqlInput.id),
-    bibles: () => bibleApiService.getAllBibles(),
+    bibles: graphqlInput => bibleApiService.getAllBibles(graphqlInput),
 
     books: graphqlInput => bibleApiService.getAllBooks(graphqlInput.bibleId),
     book: ({ bibleId, bookId, includeChapters }) => bibleApiService.getABook(bibleId, bookId, includeChapters)

@@ -57,7 +57,8 @@ exports.schema = buildSchema(`
     chapters: [Chapter] }
   
   type Query {
-    bibles: [Bible]
+    bibles(language: String, abbreviation: String, name: String, ids: String, 
+        includeFullDetails: String): [Bible]
     bible(id: String!): Bible
     books(bibleId: String!): [Book]
     book(bibleId: String!, bookId: String!, includeChapters: Boolean): Book

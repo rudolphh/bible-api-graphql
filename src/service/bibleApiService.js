@@ -5,8 +5,8 @@ class BibleAPIService {
         this.bibleApiRepository = new BibleAPIRepository();
     }
 
-    getAllBibles () {
-        return this.bibleApiRepository.getAllBibles();
+    getAllBibles (graphqlInput) {
+        return this.bibleApiRepository.getAllBibles(graphqlInput);
     }
 
     getABible (id) {
