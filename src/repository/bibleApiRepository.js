@@ -9,30 +9,29 @@ class BibleAPIRepository {
     this.apiKey = { 'api-key' : '9bea9ab8db7fd98f1f0ebb9cd98b8001' };
   }
 
-  async getAllBibles(graphqlInput) {
+  _fetchData = async (url) => {
+    const result = await fetch(url, { headers: this.apiKey })
+    .then(res => res.json())
+    .then(json => json.data);
+    return result; 
+  }
+
+  getAllBibles(graphqlInput) {
     let url = `${this.baseURL}bibles`;
     if(!_.isEmpty(graphqlInput)){
         url += `?${serialize(graphqlInput)}`;
     }
-
-    const result = await fetch(url, { headers: this.apiKey })
-    .then(res => res.json())
-    .then(json => json.data);
-
-    return result;
+    return this._fetchData(url);
   }
 
 
-  async getABible(id) {
-    const result = await fetch(`${this.baseURL}bibles/${id}`, { headers: this.apiKey })
-    .then(res => res.json())
-    .then(json => json.data);
-
-    return result; 
+  getABible(id) {
+    let url = `${this.baseURL}bibles/${id}`;
+    return this._fetchData(url);
   }
 
 
-  async getAllBooks(graphqlInput) {
+  getAllBooks(graphqlInput) {
     let url = `${this.baseURL}bibles/${graphqlInput.bibleId}/books`;
     delete graphqlInput.bibleId;
 
@@ -40,34 +39,34 @@ class BibleAPIRepository {
         url += `?${serialize(graphqlInput)}`;
     }
 
-    const result = await fetch(url, {headers: this.apiKey})
-    .then(res => res.json())
-    .then(json => json.data);
-
-    return result;
+    return this._fetchData(url);
   }
 
 
-  async getABook(bibleId, bookId, includeChapters = false) {
+  getABook(bibleId, bookId, includeChapters = false) {
     const optionalQuery = includeChapters ? '?include-chapters=true' : '';
     let url = `${this.baseURL}bibles/${bibleId}/books/${bookId}${optionalQuery}`;
-
-    const result = await fetch(url , {headers: this.apiKey})
-    .then(res => res.json())
-    .then(json => json.data);
-
-    return result;    
+    return this._fetchData(url);    
   }
 
 
-  async getAllChapters(bibleId, bookId) {
+  getAllChapters(bibleId, bookId) {
     let url = `${this.baseURL}bibles/${bibleId}/books/${bookId}/chapters`;
+    return this._fetchData(url);
+  }
 
-    const result = await fetch(url , {headers: this.apiKey})
-    .then(res => res.json())
-    .then(json => json.data);
 
-    return result;  
+  async getAChapter(graphqlInput) {
+    let url = `${this.baseURL}bibles/${graphqlInput.bibleId}/chapters/${graphqlInput.chapterId}`;
+    delete graphqlInput.bibleId;
+    delete graphqlInput.chapterId;
+
+    if(!_.isEmpty(graphqlInput)){
+        url += `?${serialize(graphqlInput)}`;
+        console.log(url);
+    }
+    return this._fetchData(url);
+
   }
 
 };

@@ -10,7 +10,8 @@ const rootResolver = {
     books: graphqlInput => bibleApiService.getAllBooks(graphqlInput),
     book: ({ bibleId, bookId, includeChapters }) => bibleApiService.getABook(bibleId, bookId, includeChapters),
 
-    chapters: ({ bibleId, bookId }) => bibleApiService.getAllChapters(bibleId, bookId)
+    chapters: ({ bibleId, bookId }) => bibleApiService.getAllChapters(bibleId, bookId),
+    chapter : graphqlInput => bibleApiService.getAChapter(graphqlInput)
 
 };
   

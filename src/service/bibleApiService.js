@@ -9,12 +9,12 @@ class BibleAPIService {
         return this.bibleApiRepository.getAllBibles(graphqlInput);
     }
 
-    getABible (id) {
-        return this.bibleApiRepository.getABible(id);
+    getABible (graphqlInput) {
+        return this.bibleApiRepository.getABible(graphqlInput);
     }
 
-    getAllBooks(bibleId) {
-        return this.bibleApiRepository.getAllBooks(bibleId);
+    getAllBooks(graphqlInput) {
+        return this.bibleApiRepository.getAllBooks(graphqlInput);
     }
 
     getABook(bibleId, bookId, includeChapters) {
@@ -24,6 +24,10 @@ class BibleAPIService {
     getAllChapters(bibleId, bookId) {
         return this.bibleApiRepository.getAllChapters(bibleId, bookId);
     }
+
+    getAChapter(graphqlInput) {
+        return this.bibleApiRepository.getAChapter(graphqlInput);
+    } 
 
 }
 
