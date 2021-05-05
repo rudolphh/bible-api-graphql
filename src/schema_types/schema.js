@@ -50,18 +50,6 @@ exports.schema = buildSchema(`
     name: String
     nameLong: String
     chapters: [Chapter] }
-  
-  type Query {
-    bibles(language: String, abbreviation: String, name: String, ids: String, 
-        includeFullDetails: Boolean): [Bible]
-    bible(id: String!): Bible
-    books(bibleId: String!, includeChapters: Boolean, includeChaptersAndSections: Boolean): [Book]
-    book(bibleId: String!, bookId: String!, includeChapters: Boolean): Book
-    chapters(bibleId: String!, bookId: String!): [Chapter]
-    chapter(bibleId: String!, chapterId: String!, contentType: String, includeNotes: Boolean,
-        includeTitles: Boolean, includeChapterNumbers: Boolean, includeVerseSpans: Boolean, 
-        parallels: String): Chapter
-  }
 
   type Meta { fums: String
     fumsId: String
@@ -103,4 +91,16 @@ exports.schema = buildSchema(`
         previous: Previous
         next: Next
         content: [Content ] }
+
+    type Query {
+        bibles(language: String, abbreviation: String, name: String, ids: String, 
+            includeFullDetails: Boolean): [Bible]
+        bible(id: String!): Bible
+        books(bibleId: String!, includeChapters: Boolean, includeChaptersAndSections: Boolean): [Book]
+        book(bibleId: String!, bookId: String!, includeChapters: Boolean): Book
+        chapters(bibleId: String!, bookId: String!): [Chapter]
+        chapter(bibleId: String!, chapterId: String!, contentType: String, includeNotes: Boolean,
+            includeTitles: Boolean, includeChapterNumbers: Boolean, includeVerseSpans: Boolean, 
+            parallels: String): Chapter
+        }
 `);
