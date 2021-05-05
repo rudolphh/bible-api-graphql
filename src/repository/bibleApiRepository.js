@@ -56,7 +56,7 @@ class BibleAPIRepository {
   }
 
 
-  async getAChapter(graphqlInput) {
+  getAChapter(graphqlInput) {
     let url = `${this.baseURL}bibles/${graphqlInput.bibleId}/chapters/${graphqlInput.chapterId}`;
     delete graphqlInput.bibleId;
     delete graphqlInput.chapterId;
@@ -66,7 +66,6 @@ class BibleAPIRepository {
         console.log(url);
     }
     return this._fetchData(url);
-
   }
 
 };
